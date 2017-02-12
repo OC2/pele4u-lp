@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
+        xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "il.co.pelephone.pele4ulp"
         version   = "115.1"
         versionCode= "11501" >
@@ -19,13 +21,14 @@
         following tag to your config.xml; you will still have the INTERNET
         permission on your app, which PhoneGap requires.
     -->
-
-
-
-
-
     <preference name="permissions"                value="none"/>
 
+
+    <supports-screens android:anyDensity="true" android:resizeable="true"
+      android:smallScreens="true"
+      android:normalScreens="true"
+      android:largeScreens="true"
+      android:xlargeScreens="true" />
     <!-- Customize your app and platform with the preference element. -->
     <preference name="orientation"                value="portrait" />        <!-- all: default means both landscape and portrait are enabled -->
     <preference name="target-device"              value="handset" />      <!-- all: possible values handset, tablet, or universal -->
@@ -48,7 +51,7 @@
 
 
 
-    <<preference name="phonegap-version" value="cli-6.0.0" /><!-- for Push Notif O.H / R.W. 08/02/2016 -->
+    <preference name="phonegap-version" value="cli-5.4.1" /><!-- for Push Notif O.H / R.W. 08/02/2016 -->
 
     <preference name="android-build-tool" value="gradle" /> <!-- for Push Notif O.H / R.W.  08/02/2016 -->
     <preference name="android-minSdkVersion" value="9" />
@@ -98,7 +101,7 @@
   </platform>
   <platform name="ios">
   <icon src="res/ios/icon/icon-small.png" width="29" height="29"/>
-  <icon src="res/ios/icon/icon-small@2x.png" width="58" height="58"/>-->
+  <icon src="res/ios/icon/icon-small@2x.png" width="58" height="58"/>
     <!--
   <icon src="res/ios/icon/icon3x.png" width="87" height="87"/>
   -->
@@ -116,10 +119,7 @@
   <icon src="res/ios/icon/icon-76.png" width="76" height="76"/>
   <icon src="res/ios/icon/icon-76@2x.png" width="152" height="152"/>
   </platform>
-
-
   <splash src="splash.png" />
-  <!--
   <splash src="res/ios/splash/Default-568h@2x~iphone.png"  platform="ios" width="640" height="1136"/>
   <splash src="res/ios/splash/Default-667h.png"  platform="ios" width="750" height="1334"/>
   <splash src="res/ios/splash/Default-736h.png"  platform="ios" width="1242" height="2208"/>
@@ -133,7 +133,7 @@
 
 
 
-
+    <!-- Define app splash screen for each platform. -->
 
   <splash src="res/android/splash/drawable-land-ldpi-screen.png"  platform="android" density="land-ldpi"/>
   <splash src="res/android/splash/drawable-land-mdpi-screen.png"  platform="android" density="land-mdpi"/>
@@ -147,7 +147,7 @@
   <splash src="res/android/splash/drawable-port-xhdpi-screen.png"  platform="android" density="port-xhdpi"/>
   <splash src="res/android/splash/drawable-port-xxhdpi-screen.png"  platform="android" density="port-xxhdpi"/>
   <splash src="res/android/splash/drawable-port-xxxhdpi-screen.png"  platform="android" density="port-xxxhdpi"/>
-   -->
+
     <config-file platform="ios" parent="CFBundleShortVersionString">
     <string>115.1</string>
     </config-file>

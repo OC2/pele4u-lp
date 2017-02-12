@@ -44,7 +44,7 @@
 
 
 
-    <preference name="phonegap-version" value="cli-6.3.0" /><!-- for Push Notif O.H / R.W. 08/02/2016 -->
+    <preference name="phonegap-version" value="cli-5.4.1" /><!-- for Push Notif O.H / R.W. 08/02/2016 -->
 
     <preference name="android-build-tool" value="gradle" /> <!-- for Push Notif O.H / R.W.  08/02/2016 -->
     <preference name="android-minSdkVersion" value="9" />

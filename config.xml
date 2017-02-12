@@ -39,24 +39,11 @@
     <preference name="SplashScreen"               value="splash.png" />
     <preference name="SplashScreenDelay"          value="4000" />
 
-    <!-- rem by R.W. 07/11/2016 <plugin name="cordova-plugin-file" spec="3.0.0" source="pgb" /> -->
-    <plugin name="cordova-plugin-file" source="npm" />
 
-    <!-- Rem by R.W. 07/11/2016 <plugin name="de.appplant.cordova.plugin.email-composer" spec="0.8.2" source="pgb" /> -->
-    <gap:plugin name="cordova-plugin-email-composer" version="0.8.3" source="npm" />
+<!-- for Push Notif O.H / R.W. 08/02/2016 -->
 
-    <!-- <plugin name="wellbload.cordova.appversion" spec="0.1.4" source="pgb" /> -->
-    <plugin name="cordova-plugin-app-version" source="npm" />
 
-    <plugin name="phonegap-plugin-barcodescanner" source="npm" />
 
-    <plugin name="onesignal-cordova-plugin" source="npm" /> <!-- for Push Notif O.H / R.W. 08/02/2016 -->
-    <plugin name="nl.x-services.plugins.launchmyapp">
-      <param name="URL_SCHEME" value="pele4u" />
-    </plugin>
-
-    <!-- Rem by R.W 17/11/2016 <preference name="phonegap-version" value="cli-6.3.0" /> rollback for deep test on different divices -->
-    <!-- <preference name="phonegap-version" value="cli-5.4.1" /> --> <!-- for Push Notif O.H / R.W. 08/02/2016 -->
     <preference name="phonegap-version" value="cli-6.3.0" /><!-- for Push Notif O.H / R.W. 08/02/2016 -->
 
     <preference name="android-build-tool" value="gradle" /> <!-- for Push Notif O.H / R.W.  08/02/2016 -->
@@ -64,31 +51,35 @@
     <!--   <preference name="android-maxSdkVersion" value="15" /> -->
     <preference name="android-targetSdkVersion" value="23" />
 
-    <!-- Rem by R.W. 07/11/2016 <plugin name="io.github.pwlin.cordova.plugins.fileopener2" spec="1.0.11" source="pgb" /> -->
 
-  <!--
-        Define a specific version of PhoneGap to build into your app.
-        <preference name="phonegap-version"       value="3.5.0" />
-    -->
 
-    <!-- Plugins -->
 
-    <!-- Core plugins -->
-    <plugin name="org.apache.cordova.battery-status" />
-    <plugin name="org.apache.cordova.console" />
-    <plugin name="org.apache.cordova.device" />
-    <plugin name="org.apache.cordova.device-motion" />
-    <plugin name="org.apache.cordova.device-orientation" />
-    <plugin name="org.apache.cordova.dialogs" />
-    <plugin name="org.apache.cordova.globalization" />
-    <plugin name="org.apache.cordova.inappbrowser" />
-    <plugin name="org.apache.cordova.media" />
-    <plugin name="org.apache.cordova.network-information" />
-    <plugin name="org.apache.cordova.file" />
+    <plugin name="cordova-plugin-battery-status" spec="~1.2.2" />
+ <plugin name="cordova-plugin-camera" spec="~2.3.1" />
+ <plugin name="cordova-plugin-console" spec="~1.0.5" />
+ <plugin name="cordova-plugin-contacts" spec="~2.2.1" />
+ <plugin name="cordova-plugin-device" spec="~1.1.4" />
+ <plugin name="cordova-plugin-device-motion" spec="~1.2.3" />
+ <plugin name="cordova-plugin-device-orientation" spec="~1.0.5" />
+ <plugin name="cordova-plugin-dialogs" spec="~1.3.1" />
+ <plugin name="cordova-plugin-file" spec="~4.3.1" />
+ <plugin name="cordova-plugin-file-transfer" spec="~1.6.1" />
+ <plugin name="cordova-plugin-globalization" spec="~1.0.5" />
+ <plugin name="cordova-plugin-inappbrowser" spec="~1.6.1" />
+ <plugin name="cordova-plugin-media" spec="~2.4.1" />
+ <plugin name="cordova-plugin-network-information" spec="~1.3.1" />
+ <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
+ <plugin name="cordova-plugin-vibration" spec="~2.1.3" />
+ <plugin name="cordova-plugin-statusbar" spec="~2.2.1" />
+ <plugin name="cordova-plugin-email-composer" version="0.8.3" source="npm" />
+ <plugin name="phonegap-plugin-barcodescanner" source="npm" />
+ <plugin name="cordova-plugin-app-version" source="npm" />
+<plugin name="onesignal-cordova-plugin" spec="^2.0.10" source="npm" />
+ <plugin name="nl.x-services.plugins.launchmyapp">
+   <param name="URL_SCHEME" value="pele4u" />
+ </plugin>
 
-    <!--<plugin name="org.apache.cordova.file-transfer" /> Rem by R.W. 114.5-->
-    <plugin name="cordova-plugin-file-transfer" source="npm" />
-    <plugin name="cordova-plugin-splashscreen"  source="npm" /> <!-- Rem after test -->
+   <plugin name="cordova-plugin-whitelist" spec="~1.3.1" />
 
 
     <!-- Third party plugins -->
@@ -158,9 +149,9 @@
   <splash src="res/android/splash/drawable-port-xxhdpi-screen.png"  platform="android" density="port-xxhdpi"/>
   <splash src="res/android/splash/drawable-port-xxxhdpi-screen.png"  platform="android" density="port-xxxhdpi"/>
 
-    <gap:config-file platform="ios" parent="CFBundleShortVersionString">
+    <config-file platform="ios" parent="CFBundleShortVersionString">
     <string>115.1</string>
-    </gap:config-file>
+    </config-file>
 
     <!--
         Define access to external domains.
@@ -175,7 +166,7 @@
     <access origin="*"/>
     <!-- Added the following intents to support the removal of whitelist code from base cordova to a plugin -->
     <!-- Whitelist configuration. Refer to https://cordova.apache.org/docs/en/edge/guide_appdev_whitelist_index.md.html -->
-    <plugin name="cordova-plugin-whitelist" version="1" />
+
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

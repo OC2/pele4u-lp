@@ -3,7 +3,7 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "il.co.pelephone.Pele4uLP"
+        id        = "il.co.pelephone.pele4ulp"
         version   = "115.1"
         versionCode= "11501" >
 

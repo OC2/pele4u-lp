@@ -2,6 +2,7 @@
 <!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
+        xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "il.co.pelephone.pele4ulp"
         version   = "115.1"
         versionCode= "11501" >
@@ -19,6 +20,13 @@
         following tag to your config.xml; you will still have the INTERNET
         permission on your app, which PhoneGap requires.
     -->
+
+
+    <supports-screens android:anyDensity="true" android:resizeable="true"
+  android:smallScreens="true"
+  android:normalScreens="true"
+  android:largeScreens="true"
+  android:xlargeScreens="true" />
 
 
 
@@ -48,7 +56,7 @@
 
     <<preference name="phonegap-version" value="cli-6.0.0" /><!-- for Push Notif O.H / R.W. 08/02/2016 -->
 
-    <preference name="android-build-tool" value="ant|gradle" /> <!-- for Push Notif O.H / R.W.  08/02/2016 -->
+    <preference name="android-build-tool" value="gradle" /> <!-- for Push Notif O.H / R.W.  08/02/2016 -->
     <preference name="android-minSdkVersion" value="9" />
     <!--   <preference name="android-maxSdkVersion" value="15" /> -->
     <preference name="android-targetSdkVersion" value="15" />

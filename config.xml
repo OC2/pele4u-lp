@@ -84,20 +84,15 @@
     <plugin name="cordova-plugin-email-composer" version="0.8.3" source="npm" />
     <plugin name="cordova-plugin-app-version" source="npm" />
      <plugin name="onesignal-cordova-plugin" source="npm" />
-    <!-- <plugin name="cordova-plugin-customurlscheme">
+     <plugin name="phonegap-plugin-barcodescanner" source="npm" />
+   <plugin name="cordova-plugin-customurlscheme">
       <param name="URL_SCHEME" value="pele4u" />
-    </plugin> -->
+    </plugin>
 
    <plugin name="cordova-plugin-whitelist" />
 
 
-    <!-- Third party plugins -->
-    <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
-    <!--
-        <plugin name="com.phonegap.plugins.barcodescanner" />
-    -->
-
-    <!-- Define app icon for each platform. -->
+  
 
     <icon src="icon.png" />
    <icon src="res/android/icon/drawable-ldpi-icon.png"  gap:platform="android" gap:qualifier="ldpi"/>

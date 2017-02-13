@@ -45,7 +45,7 @@
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
     <preference name="SplashScreen"               value="splash.png" />
     <preference name="SplashScreenDelay"          value="4000" />
-    <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-minSdkVersion" value="14" />
 
 
 <!-- for Push Notif O.H / R.W. 08/02/2016 -->

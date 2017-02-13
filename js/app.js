@@ -65,67 +65,67 @@ angular.module('pele', ['ionic'
     //-----------------------------------------
     //--   Registration for Push Notification
     //-----------------------------------------
-    PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE ,'Open Notification Event');
-    //---------- Open Notification Event -----
-    var notificationOpenedCallback = function(jsonData) {
-      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-      PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE,'notificationOpenedCallback: ' + JSON.stringify(jsonData));
-    };
-
-    if(window.plugins !== undefined) {
-
-      var isIOS = ionic.Platform.isIOS();
-      var isAndroid = ionic.Platform.isAndroid();
-      if ("PD" === appSettings.enviroment)
-      {
-        // OLD spec="1.10.2"
-
-        // window.plugins.OneSignal.init("1d0135a7-da67-4953-b241-2385bfcedcd9", {googleProjectNumber: "655668363586"}, notificationOpenedCallback);
-        PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE ,'PD Send registration');
-        window.plugins.OneSignal
-          .startInit("1d0135a7-da67-4953-b241-2385bfcedcd9", "655668363586")
-          .inFocusDisplaying(window.plugins.OneSignal.OSInFocusDisplayOption.Notification)
-          .endInit();
-
-        console.log('OneSignal : PD' );
-        PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE,'OneSignal : PD');
-      }else{
-        // OLD spec="1.10.2"
-
-        // window.plugins.OneSignal.init("922ef47f-6abc-4df5-80ea-801a8b081fa1", {googleProjectNumber: "1005906386682"}, notificationOpenedCallback);
-        PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE ,appSettings.enviroment + ' Send registration');
-
-        window.plugins.OneSignal
-          .startInit("922ef47f-6abc-4df5-80ea-801a8b081fa1", "1005906386682")
-          .inFocusDisplaying(window.plugins.OneSignal.OSInFocusDisplayOption.Notification)
-          .endInit();
-
-        console.log('OneSignal : ELSE' );
-        PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE,'OneSignal :' + appSettings.enviroment);
-
-      }
-
-      window.plugins.OneSignal.getIds(function(ids) {
-        config_app.PLAYER_ID = ids.userId;
-        console.log('getIds: ' + JSON.stringify(ids));
-        PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE,'window.plugins.OneSignal.getIds :' + ids.userId);
-      });
-
-
-    }
-
-    //----------------------------------------
-    //--    Get Version from config.xml
-    //----------------------------------------
-    if(window.cordova != undefined){
-    window.cordova.getAppVersion(function (version) {
-
-        config_app.APP_VERSION = version;
-        console.log("window.cordova.getAppVersion() : " + config_app.APP_VERSION);
-        PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE, "window.cordova.getAppVersion() : " + config_app.APP_VERSION);
-
-      });
-    }
+    // PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE ,'Open Notification Event');
+    // //---------- Open Notification Event -----
+    // var notificationOpenedCallback = function(jsonData) {
+    //   console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+    //   PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE,'notificationOpenedCallback: ' + JSON.stringify(jsonData));
+    // };
+    //
+    // if(window.plugins !== undefined) {
+    //
+    //   var isIOS = ionic.Platform.isIOS();
+    //   var isAndroid = ionic.Platform.isAndroid();
+    //   if ("PD" === appSettings.enviroment)
+    //   {
+    //     // OLD spec="1.10.2"
+    //
+    //     // window.plugins.OneSignal.init("1d0135a7-da67-4953-b241-2385bfcedcd9", {googleProjectNumber: "655668363586"}, notificationOpenedCallback);
+    //     PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE ,'PD Send registration');
+    //     window.plugins.OneSignal
+    //       .startInit("1d0135a7-da67-4953-b241-2385bfcedcd9", "655668363586")
+    //       .inFocusDisplaying(window.plugins.OneSignal.OSInFocusDisplayOption.Notification)
+    //       .endInit();
+    //
+    //     console.log('OneSignal : PD' );
+    //     PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE,'OneSignal : PD');
+    //   }else{
+    //     // OLD spec="1.10.2"
+    //
+    //     // window.plugins.OneSignal.init("922ef47f-6abc-4df5-80ea-801a8b081fa1", {googleProjectNumber: "1005906386682"}, notificationOpenedCallback);
+    //     PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE ,appSettings.enviroment + ' Send registration');
+    //
+    //     window.plugins.OneSignal
+    //       .startInit("922ef47f-6abc-4df5-80ea-801a8b081fa1", "1005906386682")
+    //       .inFocusDisplaying(window.plugins.OneSignal.OSInFocusDisplayOption.Notification)
+    //       .endInit();
+    //
+    //     console.log('OneSignal : ELSE' );
+    //     PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE,'OneSignal :' + appSettings.enviroment);
+    //
+    //   }
+    //
+    //   window.plugins.OneSignal.getIds(function(ids) {
+    //     config_app.PLAYER_ID = ids.userId;
+    //     console.log('getIds: ' + JSON.stringify(ids));
+    //     PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE,'window.plugins.OneSignal.getIds :' + ids.userId);
+    //   });
+    //
+    //
+    // }
+    //
+    // //----------------------------------------
+    // //--    Get Version from config.xml
+    // //----------------------------------------
+    // if(window.cordova != undefined){
+    // window.cordova.getAppVersion(function (version) {
+    //
+    //     config_app.APP_VERSION = version;
+    //     console.log("window.cordova.getAppVersion() : " + config_app.APP_VERSION);
+    //     PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE, "window.cordova.getAppVersion() : " + config_app.APP_VERSION);
+    //
+    //   });
+    // }
 
 
     if (window.cordova && window.cordova.plugins.Keyboard)

@@ -89,11 +89,7 @@
       <param name="URL_SCHEME" value="pele4u" />
     </plugin>
 
-   <plugin name="cordova-plugin-whitelist" />
-
-
   
-
     <icon src="icon.png" />
    <icon src="res/android/icon/drawable-ldpi-icon.png"  gap:platform="android" gap:qualifier="ldpi"/>
    <icon src="res/android/icon/drawable-mdpi-icon.png"  gap:platform="android" gap:qualifier="mdpi"/>

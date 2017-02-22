@@ -115,6 +115,7 @@
 -->
 <icon platform="ios" src="res/icons/ios/icon-small.png" width="29" height="29" />
 <icon platform="ios" src="res/icons/ios/icon-small-2x.png" width="58" height="58" />
+<icon platform="ios" src="res/icons/ios/icon-small-3x.png" width="87" height="87" />
 <icon platform="ios" src="res/icons/ios/icon-40.png" width="40" height="40" />
 <icon platform="ios" src="res/icons/ios/icon-40-2x.png" width="80" height="80" />
 <icon platform="ios" src="res/icons/ios/icon-50.png" width="50" height="50" />
@@ -148,7 +149,8 @@
 <splash platform="android" qualifier="mdpi" src="res/screens/android/screen-mdpi-portrait.png" />
 <splash platform="android" qualifier="hdpi" src="res/screens/android/screen-hdpi-portrait.png" />
 <splash platform="android" qualifier="xhdpi" src="res/screens/android/screen-xhdpi-portrait.png" />
-
+<splash platform="android" qualifier="xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png" />
+<splash platform="android" qualifier="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png" />
 
     <gap:config-file platform="ios" parent="CFBundleShortVersionString">
     <string>115.5</string>

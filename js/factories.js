@@ -335,7 +335,7 @@ angular.module('pele.factories', ['ngStorage','LocalStorageModule'])
         var userName = config_app.userName;
 
         if(note!= undefined && note != null){
-          note = note.replace(/[^\w\d\s\א-ש\(\)\@]/g, " ");
+          note = note.replace(/[^\w\d\s\א-ת\(\)\@]/g, " ");
         }
 
         var envUrl = links.URL;
@@ -990,7 +990,7 @@ angular.module('pele.factories', ['ngStorage','LocalStorageModule'])
     },
     replaceSpecialChr : function(data){
       if(data!= undefined && data != null){
-        data = data.replace(/[^\w\d\s\א-ש\(\)\@]/g, " ");
+        data = data.replace(/[^\w\d\s\א-ת\(\)\@]/g, " ");
       }
       return data;
     },

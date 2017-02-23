@@ -36,7 +36,7 @@
     <preference name="auto-hide-splash-screen"    value="true" />           <!-- ios: if set to false, the splash screen must be hidden using a JavaScript API -->
     <preference name="disable-cursor"             value="false" />          <!-- blackberry: prevents a mouse-icon/cursor from being displayed on the app -->
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
-    <preference name="SplashScreen"               value="splash.png" />
+    <preference name="SplashScreen"               value="splash" />
     <preference name="SplashScreenDelay"          value="4000" />
 	  <preference name="SplashShowOnlyFirstTime"    value="false" />
 
@@ -129,7 +129,7 @@
 <icon platform="ios" src="res/icons/ios/icon-72-2x.png" width="144" height="144" />
 <icon platform="ios" src="res/icons/ios/icon-76.png" width="76" height="76" />
 <icon platform="ios" src="res/icons/ios/icon-76-2x.png" width="152" height="152" />
-
+<splash src="splash.png" />
 <splash platform="ios" src="res/screens/ios/screen-iphone-portrait.png" width="320" height="480" />
 <splash platform="ios" src="res/screens/ios/screen-iphone-portrait-2x.png" width="640" height="960" />
 <splash platform="ios" src="res/screens/ios/screen-iphone-portrait-568h-2x.png" width="640" height="1136" />

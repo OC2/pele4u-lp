@@ -147,6 +147,7 @@ app.controller('p3_hr_moduleDocListCtrl', function($scope, $stateParams, $http, 
   };//
 
   $scope.fix_json = function( data ){
+	/*  Rem by R.W. 27-02-2017
     var newData = JSON.parse( data.Response.OutParams.Result );
     var myJSON = newData.JSON[0];
     newData = myJSON;
@@ -160,6 +161,29 @@ app.controller('p3_hr_moduleDocListCtrl', function($scope, $stateParams, $http, 
     data.Response.OutParams.Result = newData;
 
     return data;
+	*/
+	
+	var newData = {};
+    var myJSON = {};
+
+    if( data.Response.OutParams.Result === undefined)
+    {
+      data.Response.OutParams.Result = {};
+    }else{
+      newData = JSON.parse( data.Response.OutParams.Result );
+      myJSON = newData.JSON[0];
+
+      if(myJSON.DOC_LINES.length === undefined){
+        var docLinesRow = myJSON.DOC_LINES.DOC_LINES_ROW;
+        myJSON.DOC_LINES = [];
+        myJSON.DOC_LINES.DOC_LINES_ROW = docLinesRow;
+      }
+      newData = myJSON;
+      data.Response.OutParams.Result = newData;
+    }
+
+    return data;
+	
   }
 
   //--------------------------------------------------------------

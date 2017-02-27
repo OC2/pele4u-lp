@@ -188,12 +188,29 @@ app.controller('p3_po_moduleDocListCtrl', function($scope,
     }
   }
   $scope.fix_json = function( data ){
+	/* Rem by R.W. 27-02-2017  
     var newData = JSON.parse( data.Response.OutParams.Result );
     var myJSON = newData.JSON[0];
     newData = myJSON;
     data.Response.OutParams.Result = newData;
 
     return data;
+	*/
+	var newData = {};
+    var myJSON = {};
+
+    if( data.Response.OutParams.Result === undefined)
+    {
+      data.Response.OutParams.Result = {};
+    }else{
+      newData = JSON.parse( data.Response.OutParams.Result );
+      myJSON = newData.JSON[0];
+      newData = myJSON;
+      data.Response.OutParams.Result = newData;
+    }
+
+    return data;
+	
   }
   //--------------------------------------------------------------
   //-- When        Who         Description

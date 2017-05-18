@@ -1,8 +1,8 @@
 /**
  * Created by User on 25/08/2016.
  */
-var app = angular.module('pele.p4_po_doc_10002Ctrl', ['ngStorage']);
-app.controller('p4_po_doc_10002Ctrl'
+var app = angular.module('pele.p4_rq_doc_20002Ctrl', ['ngStorage']);
+app.controller('p4_rq_doc_20002Ctrl'
   , function(  $rootScope
     , $scope
     , $stateParams
@@ -22,6 +22,9 @@ app.controller('p4_po_doc_10002Ctrl'
     , $sessionStorage
     , $cordovaFileTransfer
     , $cordovaInAppBrowser
+    , $state
+    , $ionicScrollDelegate
+
     /* rem by R.W 07/11/2016 , $cordovaFileOpener2 */
   ) {
 
@@ -37,14 +40,22 @@ app.controller('p4_po_doc_10002Ctrl'
     $scope.getApproveListActionIcon=function(actionCode , date , note){
 
       var icon_class;
-      if("FORWARD" === actionCode){
+      if("FORWARD" === actionCode) {
+        icon_class = "ion-checkmark-circled";
+      }else if("FORWARD2" === actionCode) {
+        icon_class = "ion-checkmark-circled";
+      }else if ("APPROVE" === actionCode){
         icon_class = "ion-checkmark-circled";
       }else if("NO ACTION" === actionCode){
         icon_class = "ion-minus-circled";
       }else if("REJECT" === actionCode){
         icon_class = "ion-close-circled";
-      }else if(actionCode === null && date !== null && note !== null){
+      }else if(actionCode === null && date !== null && note !== null) {
         icon_class = "ion-chatbubble-working";
+      }else if("RESERVE" === actionCode) {
+        icon_class = "ion-bookmark";
+      }else if("NO_ACTION" === actionCode){
+        icon_class = "ion-minus-circled";
       }else {
         icon_class = "";
       }
@@ -80,6 +91,7 @@ app.controller('p4_po_doc_10002Ctrl'
         });
       }
     } // openExistText
+
     //---------------------------------------------------------------------------
     //--                         isGroupShown
     //---------------------------------------------------------------------------
@@ -97,6 +109,7 @@ app.controller('p4_po_doc_10002Ctrl'
         $scope.shownGroup = group;
       }
     };
+
     //============================================================================//
     //== When        Who         Description                                    ==//
     //== ----------  ----------  -----------------------------------------------==//
@@ -147,6 +160,7 @@ app.controller('p4_po_doc_10002Ctrl'
 
       return myArr;
     }// addPushFlagToActionHistory
+
     //--------------------------------------------------------------------------//
     //-- When         Who             Description                             --//
     //-- ===========  ==============  ========================================--//
@@ -165,6 +179,7 @@ app.controller('p4_po_doc_10002Ctrl'
       return retVal;
 
     }
+
     $scope.hidenAcctionHistoryDetails = function(showFlag , hidenFlag , pushCount , note ){
       var retVal = "";
       if(hidenFlag === true){
@@ -214,6 +229,7 @@ app.controller('p4_po_doc_10002Ctrl'
 
       return myArr;
     };// getMatchPrice
+
     //--------------------------------------------------------------------------//
     //-- When         Who             Description                             --//
     //-- ===========  ==============  ========================================--//
@@ -251,6 +267,49 @@ app.controller('p4_po_doc_10002Ctrl'
 
       return myArr;
     }//getAttachedDocuments
+
+    $scope.getAttachedDocumentRow = function( CATEGORY_TYPE_4
+                                            , DISPLAY_FLAG_1
+                                            , DOCUMENT_ID_2
+                                            , FILE_NAME_3
+                                            , FILE_TYPE_6
+                                            , FILE_TYPE_9
+                                            , FULL_FILE_NAME_8
+                                            , IOS_FILE_NAME_12
+                                            , IS_FILE_OPENED_ON_MOBILE_10
+                                            , OPEN_FOLDER_5
+                                            ){
+      var mayObj = {};
+
+      if(DISPLAY_FLAG_1) {
+
+        mayObj = {
+          "SEQ": 1,
+          "CATEGORY_TYPE": CATEGORY_TYPE_4,
+          "DOCUMENT_ID": DOCUMENT_ID_2,
+          "FILE_NAME": FILE_NAME_3,
+          "FILE_MAOF_TYPE": FILE_TYPE_6,
+          "FILE_TYPE": FILE_TYPE_9,
+          "FULL_FILE_NAME": FULL_FILE_NAME_8,
+          "OPEN_FILE_NAME": "/My Files &amp; Folders/" + OPEN_FOLDER_5 + '/' + FULL_FILE_NAME_8,
+          "IS_FILE_OPENED_ON_MOBILE": IS_FILE_OPENED_ON_MOBILE_10,
+          "IOS_OPEN_FILE_NAME": "/My Files &amp; Folders/" + OPEN_FOLDER_5 + '/' + IOS_FILE_NAME_12
+        }
+
+        $scope.openAttachedFile( mayObj.OPEN_FILE_NAME
+                               , mayObj.FULL_FILE_NAME
+                               , mayObj.FILE_TYPE
+                               , mayObj.FILE_MAOF_TYPE
+                               , mayObj.SHORT_TEXT
+                               , mayObj.LONG_TEXT
+                               , mayObj.IS_FILE_OPENED_ON_MOBILE
+                               , mayObj.IOS_OPEN_FILE_NAME
+                               )
+      }
+      return mayObj;
+
+    }
+
     //---------------------------------------------------------------------------
     //--                      getAttachmentLinkStyle
     //---------------------------------------------------------------------------
@@ -426,10 +485,6 @@ app.controller('p4_po_doc_10002Ctrl'
                   $scope.$broadcast('scroll.refreshComplete');
                   PelApi.showPopup(config_app.EAI_Status, "");
                 }
-              } else if("OLD" === statusCode.Status){
-                $ionicLoading.hide();
-                $scope.$broadcast('scroll.refreshComplete');
-                PelApi.showPopupVersionUpdate(data.StatusDesc , "");
               }
             });
           }
@@ -450,83 +505,225 @@ app.controller('p4_po_doc_10002Ctrl'
        */
     }
     //---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
+    $scope.getREQ_LINES_CUR = function(arr){
+      var retArr = [];
+      if(arr.length === undefined){
+        var myObj = {
+          DFF_CURRENCY_CODE: arr.REQ_LINES_CUR_ROW.DFF_CURRENCY_CODE,
+          REQUISITION_LINE_ID: arr.REQ_LINES_CUR_ROW.REQUISITION_LINE_ID,
+          REQ_LINE_DESC_8: arr.REQ_LINES_CUR_ROW.REQ_LINE_DESC_8,
+          REQ_LINE_NUM_7: arr.REQ_LINES_CUR_ROW.REQ_LINE_NUM_7,
+          REQ_PRICE_NETO_9: arr.REQ_LINES_CUR_ROW.REQ_PRICE_NETO_9,
+          REQ_QUANTITY_11: arr.REQ_LINES_CUR_ROW.REQ_QUANTITY_11,
+          REQ_SUGGESTED_VENDOR_NAME_14: arr.REQ_LINES_CUR_ROW.REQ_SUGGESTED_VENDOR_NAME_14,
+          REQ_TO_PERSON_FULL_NAME_16: arr.REQ_LINES_CUR_ROW.REQ_TO_PERSON_FULL_NAME_16,
+          REQ_UNIT_PRICE_13: arr.REQ_LINES_CUR_ROW.REQ_UNIT_PRICE_13,
+          REQ_LINE_SHOW_FLAG: arr.REQ_LINE_SHOW_FLAG,
+          REQ_LINES_ATTACHMENTS_CUR: arr.REQ_LINES_ATTACHMENTS_CUR
+        }
+        retArr.push(myObj);
+      }else{
+        retArr = arr;
+      }
+      return retArr;
+    } // getREQ_LINES_CUR
+
+
+    // YanisSha - 15.03.2016 - change function getBudgetLine
+    $scope.getBudgetLine = function(arr){
+      var retBudgetArr = [];
+
+      if (arr.length === undefined){
+        var myObj = {
+          BUDGET_LINE_NUM: arr.REQ_BUDGET_CUR_ROW.BUDGET_LINE_NUM,
+          BUDGET_LINE_SHOW_FLAG: arr.BUDGET_LINE_SHOW_FLAG,
+          REQ_DEP_1: arr.REQ_BUDGET_CUR_ROW.REQ_DEP_1,
+          REQ_BUDGET_2: arr.REQ_BUDGET_CUR_ROW.REQ_BUDGET_2,
+          REQ_SUB_BUDGET_3: arr.REQ_BUDGET_CUR_ROW.REQ_SUB_BUDGET_3,
+          TOT_GRP_DISTR_PRICE: arr.REQ_BUDGET_CUR_ROW.TOT_GRP_DISTR_PRICE,
+          TOT_GRP_DISTR_ENC_AMOUNT: arr.REQ_BUDGET_CUR_ROW.TOT_GRP_DISTR_ENC_AMOUNT,
+          REQUISITION_HEADER_ID: arr.REQ_BUDGET_CUR_ROW.REQUISITION_HEADER_ID
+        }
+
+        retBudgetArr.push(myObj);
+
+      }else{
+
+        for (var i = 0; i<arr.length; i++){
+
+          var duplicateCheckFlag = true;
+
+          var myObjTemp = {
+            BUDGET_LINE_NUM: arr[i].BUDGET_LINE_NUM,
+            BUDGET_LINE_SHOW_FLAG: arr[i].BUDGET_LINE_SHOW_FLAG,
+            REQ_DEP_1: arr[i].REQ_DEP_1,
+            REQ_BUDGET_2: arr[i].REQ_BUDGET_2,
+            REQ_SUB_BUDGET_3: arr[i].REQ_SUB_BUDGET_3,
+            TOT_GRP_DISTR_PRICE: arr[i].TOT_GRP_DISTR_PRICE,
+            TOT_GRP_DISTR_ENC_AMOUNT: arr[i].TOT_GRP_DISTR_ENC_AMOUNT,
+            REQUISITION_HEADER_ID: arr[i].REQUISITION_HEADER_ID
+          }
+
+          if (retBudgetArr.length == 0 ){
+            retBudgetArr.push(myObjTemp);
+          }else{
+
+            for(var j = 0; j<retBudgetArr.length; j++){
+              if((retBudgetArr[j].REQ_DEP_1 == myObjTemp.REQ_DEP_1) && (retBudgetArr[j].REQ_BUDGET_2 == myObjTemp.REQ_BUDGET_2) && (retBudgetArr[j].REQ_SUB_BUDGET_3 == myObjTemp.REQ_SUB_BUDGET_3)){
+                duplicateCheckFlag = false;
+                retBudgetArr[j].BUDGET_LINE_NUM = retBudgetArr[j].BUDGET_LINE_NUM + ", " + myObjTemp.BUDGET_LINE_NUM;
+                retBudgetArr[j].TOT_GRP_DISTR_PRICE = retBudgetArr[j].TOT_GRP_DISTR_PRICE + myObjTemp.TOT_GRP_DISTR_PRICE;
+                retBudgetArr[j].TOT_GRP_DISTR_ENC_AMOUNT = retBudgetArr[j].TOT_GRP_DISTR_ENC_AMOUNT + myObjTemp.TOT_GRP_DISTR_ENC_AMOUNT;
+              }
+            }
+
+            if(duplicateCheckFlag){
+              retBudgetArr.push(myObjTemp);
+            }
+          }
+        }
+
+        for (var l = 0; l<retBudgetArr.length; l++ ){
+          retBudgetArr[l].TOT_GRP_DISTR_PRICE = retBudgetArr[l].TOT_GRP_DISTR_PRICE;
+          retBudgetArr[l].TOT_GRP_DISTR_ENC_AMOUNT = retBudgetArr[l].TOT_GRP_DISTR_ENC_AMOUNT;
+        }
+
+      }
+
+      return retBudgetArr;
+    }
+
+    $scope.toggleBudgetShown = function(ReqBudgetLinesInd){
+
+      $location.hash(ReqBudgetLinesInd.BUDGET_LINE_NUM);
+      $ionicScrollDelegate.anchorScroll();
+
+    }
+
+    $scope.toggleBudgetCardShown = function(variable){
+
+      $location.hash(variable);
+      $ionicScrollDelegate.anchorScroll();
+
+    }
+
+    $scope.toggleAttachmentCardShown = function(variable){
+
+      var tempVal = config_app.docDetails.REQ_ATTACHMENTS_CUR[1].DISPLAY_FLAG_1;
+
+      if (tempVal == 'Y'){
+        $location.hash(variable);
+        $ionicScrollDelegate.anchorScroll();
+      }
+    }
+
+    //---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
+    $scope.forwardToINI = function(){
+      console.log( "INI_DOC_INIT_ID : " + $scope.INI_DOC_INIT_ID );
+      if($scope.INI_DOC_INIT_ID !== undefined ){
+        var iniDocInitId = $scope.INI_DOC_INIT_ID;
+        var iniDocId = $scope.INI_DOC_ID;
+        $state.go("app.doc_30002", {"AppId": $scope.appId, "IniDocId": iniDocId, "IniDocInitId": iniDocInitId , "DocId": $scope.DocId , "Mode":"VIEW"});
+      }
+    }
+    $scope.getAttachedDocuments = function(arr){
+      return PelApi.getAttachedDocuments(arr);
+    }
+    //---------------------------------------------------------------------------
+    //--                      getChevronIcon
+    //---------------------------------------------------------------------------
+    $scope.getChevronIcon = function(flag){
+      var retVal = PelApi.getChevronIcon();
+      return retVal;
+    }
+    //---------------------------------------------------------------------------
     //--                         doRefresh
     //---------------------------------------------------------------------------
     $scope.doRefresh = function() {
-      $scope.data = {};
-      $scope.feed = [];
-      $scope.tabs = appSettings.tabs;
-      $scope.docDetailsShow = {};
+      try {
+        $scope.data = {};
+        $scope.feed = [];
+        $scope.tabs = appSettings.tabs;
+        $scope.docDetailsShow = {};
 
-      $scope.PO_COMMENTS_SHOW = true;
-      $scope.PO_DETAILS_SHOW = true;
-      $scope.PO_EXPLAIN_SHOW = true;
-      $scope.PO_SUPPLIER_REASON_SHOW = true;
-      $scope.PO_MATCH_PRICE_SHOW = true;
-      $scope.PO_ATTACHED_DOCUMENTS_SHOW = true;
+        $scope.PO_COMMENTS_SHOW = true;
+        $scope.PO_DETAILS_SHOW = true;
+        $scope.PO_EXPLAIN_SHOW = true;
+        $scope.PO_SUPPLIER_REASON_SHOW = true;
+        $scope.PO_MATCH_PRICE_SHOW = true;
+        $scope.REQ_ATTACHED_DOCUMENTS_SHOW = true;
 
-      var buttons = {};
-      //buttons.approve = true;
+        $scope.RQ_BUDGET_SHOW = false;
 
-      $scope.style = {
-        color: 'red'
-      };
+        var buttons = {};
+        //buttons.approve = true;
 
-      var appId = config_app.appId,
-        docId = $stateParams.DocId,
-        docInitId = $stateParams.DocInitId,
-        orgName = $stateParams.orgName;
+        $scope.style = {
+          color: 'red'
+        };
 
-      $sessionStorage.DOC_ID = docId;
+        var appId = config_app.appId,
+          docId = $stateParams.DocId,
+          docInitId = $stateParams.DocInitId;
 
-      if(config_app.docDetails.ERROR !== "NULL") {
-        PelApi.showPopup(config_app.interfaceErrorTitle, config_app.docDetails.ERROR);
-        return;
+        $sessionStorage.DOC_ID = docId;
+
+        if (config_app.docDetails.ERROR !== "NULL" && config_app.docDetails.ERROR != undefined) {
+          PelApi.showPopup(config_app.interfaceErrorTitle, config_app.docDetails.ERROR);
+          return;
+        }
+        console.log("===============================================================");
+        console.log("===                   P4                                    ===");
+        console.log("===============================================================");
+        console.log(config_app.docDetails);
+
+        $scope.APP_ID = appId;
+        $scope.NOTIFICATION_ID = config_app.docDetails.NOTIFICATION_ID;
+        $scope.REQ_NUM = config_app.docDetails.REQ_NUM;
+        $scope.REQ_DESCRIPTION_2 = config_app.docDetails.REQ_DESCRIPTION_2;
+        $scope.REQ_AMOUNT_DSP_3 = config_app.docDetails.REQ_AMOUNT_DSP_3;
+        $scope.REQ_FUNCTIONAL_CURRENCY_4 = config_app.docDetails.REQ_FUNCTIONAL_CURRENCY_4;
+        $scope.REQ_DESC_5 = config_app.docDetails.REQ_DESC_5;
+        $scope.REQ_CREATION_DATE_6 = config_app.docDetails.REQ_CREATION_DATE_6;
+        $scope.REQ_LINES_CUR = $scope.getREQ_LINES_CUR(config_app.docDetails.REQ_LINES_CUR);
+        $scope.REQ_BUDGET_CUR = $scope.getBudgetLine(config_app.docDetails.REQ_BUDGET_CUR);
+        $scope.INI_DOC_INIT_ID = config_app.docDetails.DOC_INIT_ID;
+
+        if($scope.INI_DOC_INIT_ID === undefined){
+          $scope.INI_DOC_INIT_ID_VIEW = config_app.INI_DOC_INIT_ID_UNDEFINED;
+        } else{
+          $scope.INI_DOC_INIT_ID_VIEW = $scope.INI_DOC_INIT_ID;
+        }
+
+        //-------- ATTACHMENTS -----//
+        $scope.ATTACHED_DOCUMENTS = PelApi.getAttachedDocuments(config_app.docDetails.REQ_ATTACHMENTS_CUR);
+        //-----------------------------------------------------------------------//
+        //--
+        //-----------------------------------------------------------------------//
+        config_app.INITIATED_DETAILS_CUR = config_app.docDetails.INITIATED_DETAILS_CUR;
+
+        //----------- Buttons ------------
+        $scope.buttonsArr = config_app.docDetails.BUTTONS;
+
+        //----------- Action History -----
+        var actionHistory = $scope.addPushFlagToActionHistory(config_app.docDetails.REQ_APPROVAL_LIST_CUR);
+        $scope.ACTION_HISTORY = actionHistory;
+        console.log("length : " + $scope.ACTION_HISTORY.length);
+
+        console.log("====================================================");
+        console.log(JSON.stringify($scope.ACTION_HISTORY));
+        console.log("====================================================");
+
+        // Show the action sheet
+        $scope.approve = config_app.ApprovRejectBtnDisplay;
+
+        $ionicLoading.hide();
+        $scope.$broadcast('scroll.refreshComplete');
+      }catch(e){
+        alert(e);
       }
-
-      console.log(config_app.docDetails);
-      //----------- Order Header -------------
-      $scope.APP_ID = appId;
-      $scope.NOTIFICATION_ID = config_app.docDetails.NOTIFICATION_ID;
-      $scope.PO_ORDER = config_app.docDetails.PO_ORDER;
-      $scope.PO_ORDER_NUMBER = config_app.docDetails.PO_ORDER_NUMBER;
-      $scope.COMMENTS = config_app.docDetails.COMMENTS;
-      $scope.PO_AMOUNT = config_app.docDetails.PO_AMOUNT;
-      $scope.CURRENCY = config_app.docDetails.CURRENCY;
-      $scope.VENDOR_NAME = config_app.docDetails.VENDOR_NAME;
-      $scope.SUBMIT_DATE = config_app.docDetails.SUBMIT_DATE;
-      $scope.BUYER_NAME = config_app.docDetails.BUYER_NAME;
-      $scope.MANAGER_NAME = config_app.docDetails.MANAGER_NAME;
-      $scope.PO_EXPLAIN = config_app.docDetails.PO_EXPLAIN;
-      $scope.SUPPLIER_REASON = config_app.docDetails.SUPPLIER_REASON;
-
-      //----------- Match Price --------
-      $scope.MATCH_PRICE = $scope.getMatchPrice(config_app.docDetails.MATCH_PRICE);
-      console.log("================== MATCH PRICE ====================");
-      console.log($scope.MATCH_PRICE);
-
-      //----------- Attachments --------
-      $scope.ATTACHED_DOCUMENTS = $scope.getAttachedDocuments(config_app.docDetails.ATTACHED_DOCUMENTS);
-      console.log("================== ATTACHED_DOCUMENTS ====================");
-      console.log(JSON.stringify($scope.ATTACHED_DOCUMENTS));
-
-      //----------- Buttons ------------
-      $scope.buttonsArr      = config_app.docDetails.BUTTONS;
-
-      //----------- Action History -----
-      var actionHistory = $scope.addPushFlagToActionHistory(config_app.docDetails.ACTION_HISTORY);
-      $scope.ACTION_HISTORY = actionHistory;
-      console.log("length : " + $scope.ACTION_HISTORY.length);
-
-      console.log("====================================================");
-      console.log(JSON.stringify($scope.ACTION_HISTORY));
-      console.log("====================================================");
-
-      // Show the action sheet
-      $scope.approve = config_app.ApprovRejectBtnDisplay;
-
-      $ionicLoading.hide();
-      $scope.$broadcast('scroll.refreshComplete');
 
     }; // doRefresh
 

@@ -147,23 +147,12 @@ app.controller('p3_hr_moduleDocListCtrl', function($scope, $stateParams, $http, 
   };//
 
   $scope.fix_json = function( data ){
-	/*  Rem by R.W. 27-02-2017
+    /*
     var newData = JSON.parse( data.Response.OutParams.Result );
     var myJSON = newData.JSON[0];
     newData = myJSON;
-    //-- fix doc lines --//
-    if(myJSON.DOC_LINES.length === undefined){
-      var docLinesRow = myJSON.DOC_LINES.DOC_LINES_ROW;
-      myJSON.DOC_LINES = [];
-      myJSON.DOC_LINES.DOC_LINES_ROW = docLinesRow;
-    }
-
-    data.Response.OutParams.Result = newData;
-
-    return data;
-	*/
-	
-	var newData = {};
+    */
+    var newData = {};
     var myJSON = {};
 
     if( data.Response.OutParams.Result === undefined)
@@ -183,7 +172,7 @@ app.controller('p3_hr_moduleDocListCtrl', function($scope, $stateParams, $http, 
     }
 
     return data;
-	
+
   }
 
   //--------------------------------------------------------------
@@ -270,6 +259,12 @@ app.controller('p3_hr_moduleDocListCtrl', function($scope, $stateParams, $http, 
             $ionicLoading.hide();
             $scope.$broadcast('scroll.refreshComplete');
             PelApi.showPopup(stat.description, "");
+
+          } else if("OLD" === pinStatus){
+
+            $ionicLoading.hide();
+            $scope.$broadcast('scroll.refreshComplete');
+            PelApi.showPopupVersionUpdate(data.StatusDesc , "");
 
           }
         });

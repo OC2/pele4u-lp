@@ -15,8 +15,8 @@ angular.module('pele.P2_moduleListCtrl', ['ngStorage'])
                                             $ionicModal ,
                                             $timeout ,
                                             $sessionStorage,
-                                            appSettings
-    ,srvShareData
+                                            appSettings,
+                                            srvShareData
   ) {
     //----------------------- LOGIN --------------------------//
 
@@ -261,6 +261,10 @@ angular.module('pele.P2_moduleListCtrl', ['ngStorage'])
               $ionicLoading.hide();
               $scope.$broadcast('scroll.refreshComplete');
               PelApi.showPopup(stat.description, "");
+            } else if("OLD" === pinCodeStatus){
+              $ionicLoading.hide();
+              $scope.$broadcast('scroll.refreshComplete');
+              PelApi.showPopupVersionUpdate(data.StatusDesc , "");
             }
 
           });

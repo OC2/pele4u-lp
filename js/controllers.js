@@ -81,10 +81,16 @@ angular.module('pele.controllers', ['ngStorage'])
 //==                        homeCtrl                                 ==//
 //=====================================================================//
 .controller('homeCtrl' , function($scope , $http , $state , $ionicLoading , PelApi , $cordovaNetwork , $rootScope , $ionicPopup, $stateParams){
+    console.log("==================== homeCtrl =======================");
+
     var showLoading = $stateParams.showLoading;
+
     if("Y" === showLoading){
+
       PelApi.showLoading();
+
     }
+
 }) // homeCtrl
 //=====================================================================//
 //==                      Setings SendLog                            ==//

@@ -15,7 +15,7 @@ app.controller('p2_scan_printCtrl', function($scope, $stateParams , $cordovaBarc
       console.log("======== in scanBarcode ==========");
       if(window.cordova != undefined){
         $cordovaBarcodeScanner.scan().then(function(imageData) {
-          var printUrl = imageData.text ;
+          var printUrl = imageData.text;
 
           var patt = new RegExp(config_app.MSSO_PRINT_URL);
           var res = patt.test(printUrl);

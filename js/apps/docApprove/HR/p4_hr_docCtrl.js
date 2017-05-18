@@ -420,7 +420,11 @@ app.controller('p4_hr_docCtrl',['$rootScope'
                       $scope.$broadcast('scroll.refreshComplete');
                       PelApi.showPopup(stat.description, "");
 
-                    }else{
+                    } else if("OLD" === pinStatus){
+                      $ionicLoading.hide();
+                      $scope.$broadcast('scroll.refreshComplete');
+                      PelApi.showPopupVersionUpdate(data.StatusDesc , "");
+                    } else{
                       $ionicLoading.hide();
                       $scope.$broadcast('scroll.refreshComplete');
                       $ionicNavBarDelegate.back();
@@ -470,7 +474,11 @@ app.controller('p4_hr_docCtrl',['$rootScope'
                   $scope.$broadcast('scroll.refreshComplete');
                   PelApi.showPopup(stat.description, "");
 
-                }else{
+                } else if("OLD" === pinStatus){
+                  $ionicLoading.hide();
+                  $scope.$broadcast('scroll.refreshComplete');
+                  PelApi.showPopupVersionUpdate(data.StatusDesc , "");
+                } else{
                   $ionicLoading.hide();
                   $scope.$broadcast('scroll.refreshComplete');
                   $ionicNavBarDelegate.back();

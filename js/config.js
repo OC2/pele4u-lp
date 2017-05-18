@@ -25,7 +25,8 @@ angular.module('pele.config', [])
       "PCR": "הזינו קוד מחמיר, אפליקצייה דורשת הזדהות",
       "InValid": "",// - general error
       "Valid": "",
-      "SYS_ERROR": "שגיאה מערכתי ..."
+      "SYS_ERROR": "שגיאה מערכתי ...",
+      "OLD": "הגרסה אינה עדכנית, נדרש לבצע התקנה לגרסה אחרונה. "
     },
     tabs: [{"text": "סבב מאשרים"}, {"text": "תוכן טופס"}],
     ATTACHMENT_BLUE_STYLE:{"color":"blue"},
@@ -367,7 +368,7 @@ config_app = {};
 
 var config_app;
 config_app = {
-  APP_VERSION:"115.1",
+  APP_VERSION:"116.6",
   SCAN_PRINT_SCANNING_ERROR : "שגיאה בסריקה",
   PIN_CODE_AUTHENTICATION_REQUIRED_CODE :"10000",
   IS_TOKEN_VALID:"N",
@@ -448,6 +449,7 @@ config_app = {
   ApprovRejectBtnDisplay: true,
   UP_TO_DATE: "N",
   MSSO_PRINT_URL: "https:/*/msso.pelephone.co.il",
-  MSSO_PRINT_WRONG_BARCODE:"ברקוד לא משויך למדפסת ..."
+  MSSO_PRINT_WRONG_BARCODE:"ברקוד לא משויך למדפסת ...",
+  INI_DOC_INIT_ID_UNDEFINED:"לא מקושר מסמך יזום"
 };
 

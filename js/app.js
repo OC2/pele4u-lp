@@ -35,6 +35,15 @@ angular.module('pele', ['ionic'
                        ,'pele.p3_hr_moduleDocListCtrl'
                        ,'pele.p4_hr_docCtrl'
                        //-----------------------------------------//
+                       //--        docApprove/RQ
+                       //-----------------------------------------//
+                       ,'pele.p3_rq_moduleDocListCtrl'
+                       ,'pele.p4_rq_doc_20002Ctrl'
+                       //-----------------------------------------//
+                       //--        docApprove/INI
+                       //-----------------------------------------//
+                       ,'pele.p4_ini_doc_30002Ctrl'
+                       //-----------------------------------------//
                        //--          scsn Print
                        //-----------------------------------------//
                        ,'pele.p2_scan_printCtrl'
@@ -42,9 +51,13 @@ angular.module('pele', ['ionic'
                        //--           Settings                  --//
                        //-----------------------------------------//
                        ,'fileLogger'
+                       //-----------------------------------------//
+                       //-----------------------------------------//
+                       ,'pele.p2_testCtrl'
                        ])
 
 .run(function($ionicPlatform , $state , $ionicLoading , $fileLogger , PelApi , appSettings  ) {
+
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -181,7 +194,50 @@ angular.module('pele', ['ionic'
         }
       }
     })
-
+    //-------------------------------------------//
+    //--               RQ                      --//
+    //-------------------------------------------//
+     .state('app.p3_rq_moduleDocList', {
+       url: "/p3_rq_moduleDocList/:AppId/:FormType/:Pin",
+       views: {
+         'menuContent': {
+           templateUrl: "templates/apps/DocApprove/RQ/p3_rq_moduleDocList.html",
+           controller: 'p3_rq_moduleDocListCtrl'
+         }
+       }
+     })
+     .state('app.doc_20002', {
+       url: "/doc_20002/:DocId/:DocInitId",
+       views: {
+         'menuContent': {
+           templateUrl: "templates/apps/DocApprove/RQ/p4_rq_doc_20002.html",
+           controller: 'p4_rq_doc_20002Ctrl'
+         }
+       }
+     })
+    //-------------------------------------------//
+    //--              INI                      --//
+    //-------------------------------------------//
+     /*
+     .state('app.p3_ini_moduleDocList', {
+       url: "/p3_rq_moduleDocList/:AppId/:FormType/:Pin",
+       views: {
+         'menuContent': {
+           templateUrl: "templates/apps/DocApprove/INI/p3_ini_moduleDocList.html",
+           controller: 'p3_ini_moduleDocListCtrl'
+         }
+       }
+     })
+     */
+     .state('app.doc_30002', {
+       url: "/doc_30002/:IniDocId/:IniDocInitId/:DocId/:Mode",
+       views: {
+         'menuContent': {
+           templateUrl: "templates/apps/DocApprove/INI/p4_ini_doc_30002.html",
+           controller: 'p4_ini_doc_30002Ctrl'
+         }
+       }
+     })
     //-------------------------------------------//
     //--               PO                      --//
     //-------------------------------------------//
@@ -260,7 +316,7 @@ angular.module('pele', ['ionic'
       url: '/home/:showLoading',
       views: {
         'menuContent': {
-          templateUrl: 'templates/p1_appsLists.html',
+          templateUrl: 'templates/home.html',
           controller: 'homeCtrl'
         }
       }
@@ -338,6 +394,18 @@ angular.module('pele', ['ionic'
        }
   })
   //----------------------------------------------------------//
+  //--                      TEST
+  //----------------------------------------------------------//
+  .state('app.p2_test', {
+         url: '/p2_test',
+         views: {
+           'menuContent': {
+           templateUrl: 'templates/apps/DocApprove/TEST/p2_test.html',
+           controller: 'p2_testCtrl'
+         }
+       }
+     })
+  //----------------------------------------------------------//
   //--              PrintScaner
   //----------------------------------------------------------//
   .state('app.p2_scan_print', {
@@ -352,5 +420,6 @@ angular.module('pele', ['ionic'
   ;
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/home',{'showLoading':'Y'});
+  $urlRouterProvider.otherwise('/apps/home.html',{'showLoading':'Y'});
+
 });

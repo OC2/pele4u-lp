@@ -1,11 +1,11 @@
 /**
  * Created by User on 25/08/2016.
  */
-var app = angular.module('pele.p3_po_moduleDocListCtrl', ['ngStorage']);
+var app = angular.module('pele.p2_testCtrl', ['ngStorage']);
 //====================================================================================
 //==                                  PAGE_3
 //====================================================================================
-app.controller('p3_po_moduleDocListCtrl', function($scope,
+app.controller('p2_testCtrl', function($scope,
                                                    $stateParams,
                                                    $http,
                                                    $q,
@@ -24,123 +24,22 @@ app.controller('p3_po_moduleDocListCtrl', function($scope,
   //----------------------- REFRESH ------------------------//
   $scope.doRefresh = function () {
 
-    PelApi.showLoading();
+    //PelApi.showLoading();
 
-    var sessionDocId = $sessionStorage.DOC_ID;
-    $scope.toggleGroup(sessionDocId);
 
-    $scope.shownGroup = config_app.PO_ORG_NAME;
+    $scope.toggleGroup(0);
 
-    var appId = $stateParams.AppId,
-      formType = $stateParams.FormType,
-      pin = $stateParams.Pin;
 
-    PelApi.delete_ATTACHMENT_DIRECTORY_NAME();
+    $scope.chats= [{"DOC_NAME":"הזמנות"
+                   ,"DOC_QTY":"7"
+                   ,"DOC_DETAILS":[{"MESSAGE_TYPE":"לאישור" ,"DOC2_QTY":"( 2 )"} ,{"MESSAGE_TYPE":"לידיעה" ,"DOC2_QTY":"( 5 )"}]}
+                   ,{"WF_ITEM_TYPE":"POAPPRV"
+                   ,"DOC_NAME":"טפסים ארגונים"
+                   ,"DOC_QTY":"15"
+                   ,"DOC_DETAILS":[{"MESSAGE_TYPE":"לאישור" ,"DOC2_QTY":"( 7 )"} ,{"MESSAGE_TYPE":"לידיעה" ,"DOC2_QTY":"( 8 )"}]}
+                   ];
 
-    var links = PelApi.getDocApproveServiceUrl("GetUserPoOrdGroup");
 
-    var retGetUserFormGroups = PelApi.GetUserPoOrdGroupGroup(links, appId, formType, pin);
-
-    retGetUserFormGroups.then(
-      //--- SUCCESS ---//
-      function () {
-
-        retGetUserFormGroups.success(function (data, status, headers, config) {
-
-          PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE, JSON.stringify(data));
-
-          var stat = PelApi.GetPinCodeStatus2(data, "GetUserPoOrdGroupGroup");
-          var pinStatus = stat.status;
-
-          console.log(data);
-
-          if ("Valid" === pinStatus) {
-            if(data.Response.OutParams.P_ERROR_CODE !== 0 ){
-              var errorMsg = data.Response.OutParams.P_ERROR_DESC;
-              PelApi.showPopup(errorMsg, "");
-            }else{
-              $scope.chats = data.Response.OutParams.ROW;
-              console.log($scope.chats);
-              $scope.title = "אישור הזמנות רכש";
-              var rowLength = $scope.chats.length;
-
-              var emptyFlag = "N";
-              try{
-                if($scope.chats[0].ORDER_QTY !== undefined) {
-                  emptyFlag = "N";
-                }else{
-                  emptyFlag = "Y";
-                }
-              }catch(e){
-                emptyFlag = "Y";
-              }
-              if("N" === emptyFlag){
-                $ionicLoading.hide();
-                $scope.$broadcast('scroll.refreshComplete');
-              }else{
-                $ionicLoading.hide();
-                $scope.$broadcast('scroll.refreshComplete');
-                var appId = $stateParams.AppId,
-                  formType = $stateParams.FormType,
-                  pin = $stateParams.Pin;
-
-                $state.go("app.p2_moduleList",{"AppId": appId, "Title": "", "Pin": pin});
-              }
-
-              //}
-            }
-          } else if ("PDA" === pinStatus) {
-
-            $ionicLoading.hide();
-            $scope.$broadcast('scroll.refreshComplete');
-            //$scope.login();
-            config_app.IS_TOKEN_VALID = "N";
-            PelApi.goHome();
-
-          } else if("EOL" === pinStatus){
-            $ionicLoading.hide();
-            $scope.$broadcast('scroll.refreshComplete');
-            config_app.IS_TOKEN_VALID = "N";
-            PelApi.goHome();
-
-          } else if ("InValid" === pinStatus) {
-
-            $ionicLoading.hide();
-            $scope.$broadcast('scroll.refreshComplete');
-            //$state.go("app.p1_appsLists");
-            config_app.IS_TOKEN_VALID = "N";
-            PelApi.goHome();
-
-          } else if ("EAI_ERROR" === pinStatus){
-
-            $ionicLoading.hide();
-            $scope.$broadcast('scroll.refreshComplete');
-            PelApi.showPopup(config_app.EAI_ERROR_DESC, "");
-
-          } else if ("ERROR_CODE" === pinStatus){
-
-            $ionicLoading.hide();
-            $scope.$broadcast('scroll.refreshComplete');
-            PelApi.showPopup(stat.description, "");
-
-          } else if("OLD" === pinStatus){
-
-            $ionicLoading.hide();
-            $scope.$broadcast('scroll.refreshComplete');
-            PelApi.showPopupVersionUpdate(data.StatusDesc , "");
-
-          }
-
-      });
-      }
-      //--- ERROR ---//
-      , function (response) {
-          PelApi.writeToLog(config_app.LOG_FILE_ERROR_TYPE, "GetUserPoOrdGroupGroup : " + JSON.stringify(response));
-          $ionicLoading.hide();
-          $scope.$broadcast('scroll.refreshComplete');
-          PelApi.showPopup(config_app.getUserModuleTypesErrorMag, "");
-      }
-    );
     /*
      }
      */
@@ -195,30 +94,12 @@ app.controller('p3_po_moduleDocListCtrl', function($scope,
     }
   }
   $scope.fix_json = function( data ){
-    /*
     var newData = JSON.parse( data.Response.OutParams.Result );
     var myJSON = newData.JSON[0];
     newData = myJSON;
     data.Response.OutParams.Result = newData;
 
     return data;
-    */
-
-    var newData = {};
-    var myJSON = {};
-
-    if( data.Response.OutParams.Result === undefined)
-    {
-      data.Response.OutParams.Result = {};
-    }else{
-      newData = JSON.parse( data.Response.OutParams.Result );
-      myJSON = newData.JSON[0];
-      newData = myJSON;
-      data.Response.OutParams.Result = newData;
-    }
-
-    return data;
-
   }
   //--------------------------------------------------------------
   //-- When        Who         Description
@@ -300,24 +181,17 @@ app.controller('p3_po_moduleDocListCtrl', function($scope,
             config_app.IS_TOKEN_VALID = "N";
             PelApi.goHome();
 
-          } else if("OLD" === pinStatus){
-
-            $ionicLoading.hide();
-            $scope.$broadcast('scroll.refreshComplete');
-            PelApi.showPopupVersionUpdate(data.StatusDesc , "");
-
           }
 
 
-
-      });
+        });
       }
       //--- ERROR ---//
       , function (response) {
-          PelApi.writeToLog(config_app.LOG_FILE_ERROR_TYPE , "GetUserNotificationsNew : " + JSON.stringify(response));
-          $ionicLoading.hide();
-          $scope.$broadcast('scroll.refreshComplete');
-          PelApi.showPopup(config_app.getUserModuleTypesErrorMag , "");
+        PelApi.writeToLog(config_app.LOG_FILE_ERROR_TYPE , "GetUserNotificationsNew : " + JSON.stringify(response));
+        $ionicLoading.hide();
+        $scope.$broadcast('scroll.refreshComplete');
+        PelApi.showPopup(config_app.getUserModuleTypesErrorMag , "");
       }
     );
   } // forwardToDoc

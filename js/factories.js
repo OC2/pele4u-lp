@@ -137,6 +137,7 @@ angular.module('pele.factories', ['ngStorage','LocalStorageModule'])
       }else{
         envUrl = links.URL;
         headers = {"Content-Type": "application/json; charset=utf-8","VERSION":version};
+        //headers = {"Content-Type": "application/json; charset=utf-8"};
       }
 
       this.writeToLog(config_app.LOG_FILE_INFO_TYPE ,"====== getMenu ======");
@@ -991,6 +992,9 @@ angular.module('pele.factories', ['ngStorage','LocalStorageModule'])
     replaceSpecialChr : function(data){
       if(data!= undefined && data != null){
         data = data.replace(/[^\w\d\s\א-ת\(\)\@]/g, " ");
+        //data = data.replace(/[\\]/g, '\\\\');
+        //data = data.replace(/[\/]/g, '\\/');
+        //data = data;
       }
       return data;
     },
@@ -1027,6 +1031,14 @@ angular.module('pele.factories', ['ngStorage','LocalStorageModule'])
 
       retVal.URL    =  data.Response.OutParams.URI;
       return retVal;
+    },
+    getChevronIcon : function(flag){
+      var ret_val;
+      if(flag){
+        ret_val = "ion-chevron-left";
+      }else{
+        ret_val = "ion-chevron-down";
+      }
     },
     //------------------------------------------------------------//
     //--                  getAttachedDocuments

@@ -214,6 +214,7 @@ app.controller('P1_appsListCtrl'
 
     return myArr;
   }
+
   /*
    * ==========================================================
    *                    GetUserMenuMain
@@ -319,7 +320,6 @@ app.controller('P1_appsListCtrl'
           }else if("OLD" === pinCodeStatus){
             $ionicLoading.hide();
             $scope.$broadcast('scroll.refreshComplete');
-            errorMsg = appSettings.PIN_STATUS.PAD;
             PelApi.showPopupVersionUpdate(data.StatusDesc , "");
           }
         });
@@ -335,6 +335,7 @@ app.controller('P1_appsListCtrl'
       }
     );
   } //  GetUserMenuMain
+
   $scope.setMSISDN = function(pin){
 
       PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE , " START $scope.setMSISDN");
@@ -358,6 +359,7 @@ app.controller('P1_appsListCtrl'
       var value = window.localStorage.getItem("PELE4U_MSISDN");
       return value;
     } // getMSISDN
+
   /** *****************************************************************
    *  When         Who      Description
    *  -----------  -------  -------------------------------------------
@@ -428,6 +430,8 @@ app.controller('P1_appsListCtrl'
       var path = i.Path; //"apps/" + i.Path + "/app.html";
       //window.location.href = path;
       $state.go(path, {"AppId": i.AppId, "Title": i.Title, "Pin": i.Pin});
+      //$state.go("app.p2_test");
+
     }
 
   };

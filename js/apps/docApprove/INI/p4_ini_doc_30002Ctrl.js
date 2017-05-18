@@ -1,8 +1,8 @@
 /**
  * Created by User on 25/08/2016.
  */
-var app = angular.module('pele.p4_po_doc_10002Ctrl', ['ngStorage']);
-app.controller('p4_po_doc_10002Ctrl'
+var app = angular.module('pele.p4_ini_doc_30002Ctrl', ['ngStorage']);
+app.controller('p4_ini_doc_30002Ctrl'
   , function(  $rootScope
     , $scope
     , $stateParams
@@ -37,14 +37,22 @@ app.controller('p4_po_doc_10002Ctrl'
     $scope.getApproveListActionIcon=function(actionCode , date , note){
 
       var icon_class;
-      if("FORWARD" === actionCode){
+      if("FORWARD" === actionCode) {
+        icon_class = "ion-checkmark-circled";
+      }else if("FORWARD2" === actionCode) {
+        icon_class = "ion-checkmark-circled";        
+      }else if ("APPROVE" === actionCode){
         icon_class = "ion-checkmark-circled";
       }else if("NO ACTION" === actionCode){
         icon_class = "ion-minus-circled";
       }else if("REJECT" === actionCode){
         icon_class = "ion-close-circled";
-      }else if(actionCode === null && date !== null && note !== null){
+      }else if(actionCode === null && date !== null && note !== null) {
         icon_class = "ion-chatbubble-working";
+      }else if("RESERVE" === actionCode){
+        icon_class = "ion-bookmark";
+      }else if("NO_ACTION" === actionCode){
+        icon_class = "ion-minus-circled";
       }else {
         icon_class = "";
       }
@@ -104,46 +112,50 @@ app.controller('p4_po_doc_10002Ctrl'
     //============================================================================//
     $scope.addPushFlagToActionHistory = function(arr){
       var myArr = [];
-      var j = arr.length;
-      for(var i = 0; i < arr.length ; i++ , j--){
-        var showFlag = false;
-        var hideFlag = false;
-        if( arr[j-1].DISPLAY_FLAG === "N"){
-          showFlag = true;
-        }else if(arr[j-1].NOTE !== "" && arr[j-1].NOTE != undefined){
-          showFlag = false;
-        }else{
-          showFlag = true
-        };
-        //---------------------------------------
-        //-- Calculate
-        //---------------------------------------
-        var l_displayFlag = arr[j-1].DISPLAY_FLAG;
-        var l_actionCode = arr[j-1].ACTION_CODE;
-        if(arr[j-1].DISPLAY_FLAG === "N"){
-          hideFlag = true;
-        } else if((arr[j-1].ACTION_CODE === "" || arr[j-1].ACTION_CODE === undefined || arr[j-1].ACTION_CODE === null)
-          && (arr[j-1].CHAR_ACTION_DATE === "" || arr[j-1].CHAR_ACTION_DATE === undefined || arr[j-1].CHAR_ACTION_DATE === null)){
-          hideFlag = true
-        }
+      console.log("=============== addPushFlagToActionHistory =====================")
+      console.log(arr);
+      if(arr !== null ){
+        var j = arr.length;
+        for(var i = 0; i < arr.length ; i++ , j--){
+          var showFlag = false;
+          var hideFlag = false;
+          if( arr[j-1].DISPLAY_FLAG === "N"){
+            showFlag = true;
+          }else if(arr[j-1].NOTE !== "" && arr[j-1].NOTE != undefined){
+            showFlag = false;
+          }else{
+            showFlag = true
+          };
+          //---------------------------------------
+          //-- Calculate
+          //---------------------------------------
+          var l_displayFlag = arr[j-1].DISPLAY_FLAG;
+          var l_actionCode = arr[j-1].ACTION_CODE;
+          if(arr[j-1].DISPLAY_FLAG === "N"){
+            hideFlag = true;
+          } else if((arr[j-1].ACTION_CODE === "" || arr[j-1].ACTION_CODE === undefined || arr[j-1].ACTION_CODE === null)
+            && (arr[j-1].CHAR_ACTION_DATE === "" || arr[j-1].CHAR_ACTION_DATE === undefined || arr[j-1].CHAR_ACTION_DATE === null)){
+            hideFlag = true
+          }
 
-        var mayObj = {
-          "DISPLAY_FLAG":arr[j-1].DISPLAY_FLAG,
-          "OBJECT_ID":arr[j-1].OBJECT_ID,
-          "CHAR_ACTION_DATE":arr[j-1].CHAR_ACTION_DATE,
-          "ACTION_CODE":arr[j-1].ACTION_CODE,
-          "ACTION_CODE_DISP":arr[j-1].ACTION_CODE_DISP,
-          "EMPLOYEE_NAME":arr[j-1].EMPLOYEE_NAME,
-          "NOTE":arr[j-1].NOTE,
-          "SEQUENCE_NUM":i+1,
-          "SHOW_FLAG": showFlag,
-          "HIDEN_FLAG": hideFlag,
-          "PUSH_COUNT": 0
-        }
+          var mayObj = {
+            "DISPLAY_FLAG":arr[j-1].DISPLAY_FLAG,
+            "OBJECT_ID":arr[j-1].OBJECT_ID,
+            "CHAR_ACTION_DATE":arr[j-1].CHAR_ACTION_DATE,
+            "ACTION_CODE":arr[j-1].ACTION_CODE,
+            "ACTION_CODE_DISP":arr[j-1].ACTION_CODE_DISP,
+            "EMPLOYEE_NAME":arr[j-1].EMPLOYEE_NAME,
+            "NOTE":arr[j-1].NOTE,
+            "SEQUENCE_NUM":i+1,
+            "SHOW_FLAG": showFlag,
+            "HIDEN_FLAG": hideFlag,
+            "PUSH_COUNT": 0
+          }
 
-        myArr.push(mayObj);
+          myArr.push(mayObj);
 
-      }// for
+        }// for
+      }
 
       return myArr;
     }// addPushFlagToActionHistory
@@ -431,7 +443,8 @@ app.controller('p4_po_doc_10002Ctrl'
                 $scope.$broadcast('scroll.refreshComplete');
                 PelApi.showPopupVersionUpdate(data.StatusDesc , "");
               }
-            });
+
+          });
           }
           , function (response) {
             PelApi.writeToLog(config_app.LOG_FILE_ERROR_TYPE , "GetFileURI : " + JSON.stringify(response));
@@ -449,6 +462,43 @@ app.controller('p4_po_doc_10002Ctrl'
        }
        */
     }
+
+    //------------------------------------------------------------//
+    //--                  getAttachedDocuments
+    //------------------------------------------------------------//
+    $scope.getAttachedDocuments = function(arr){
+      var myArr = [];
+      for(var i = 0 ; i < arr.length ; i++ ){
+
+        if( arr[i].DISPLAY_FLAG_1 === "Y") {
+          var file_name = "";
+
+          file_name = arr[i].FILE_NAME_3;
+
+          var mayObj = {
+            "SEQ"                      : i,
+            "CATEGORY_TYPE"            : arr[i].CATEGORY_TYPE_4,
+            "DOCUMENT_ID"              : arr[i].DOCUMENT_ID_2,
+            "FILE_NAME"                : file_name,
+            "FILE_MAOF_TYPE"           : arr[i].FILE_TYPE_6,
+            "FILE_TYPE"                : arr[i].FILE_TYPE_9,
+            "FULL_FILE_NAME"           : arr[i].FULL_FILE_NAME_8,
+            "OPEN_FILE_NAME"           : "/My Files &amp; Folders/" + arr[i].OPEN_FOLDER_5 + '/' +  arr[i].FULL_FILE_NAME_8,
+            //"SHORT_TEXT"               : arr[i].SHORT_TEXT_7,
+            //"LONG_TEXT"                : arr[i].LONG_TEXT_VALUE_11,
+            "IS_FILE_OPENED_ON_MOBILE" : arr[i].IS_FILE_OPENED_ON_MOBILE_10,
+            "IOS_OPEN_FILE_NAME"       : "/My Files &amp; Folders/" + arr[i].OPEN_FOLDER_5 + '/' + arr[i].IOS_FILE_NAME_12
+          }
+
+          myArr.push(mayObj);
+
+        } // if
+
+      }// for
+
+      return myArr;
+    }//getAttachedDocuments
+
     //---------------------------------------------------------------------------
     //--                         doRefresh
     //---------------------------------------------------------------------------
@@ -458,12 +508,10 @@ app.controller('p4_po_doc_10002Ctrl'
       $scope.tabs = appSettings.tabs;
       $scope.docDetailsShow = {};
 
-      $scope.PO_COMMENTS_SHOW = true;
-      $scope.PO_DETAILS_SHOW = true;
-      $scope.PO_EXPLAIN_SHOW = true;
-      $scope.PO_SUPPLIER_REASON_SHOW = true;
-      $scope.PO_MATCH_PRICE_SHOW = true;
-      $scope.PO_ATTACHED_DOCUMENTS_SHOW = true;
+      $scope.INI_DETAILS_SHOW = true;
+      $scope.INI_ATTACHED_DOCUMENTS_SHOW = true;
+
+      $scope.INITIATED_DETAILS_CUR = config_app.INITIATED_DETAILS_CUR[0];
 
       var buttons = {};
       //buttons.approve = true;
@@ -473,54 +521,43 @@ app.controller('p4_po_doc_10002Ctrl'
       };
 
       var appId = config_app.appId,
+        IniDocId = $stateParams.IniDocId,
+        IniDocInitId = $stateParams.IniDocInitId,
         docId = $stateParams.DocId,
-        docInitId = $stateParams.DocInitId,
-        orgName = $stateParams.orgName;
+        mode = $stateParams.Mode;
 
+      $scope.INI_DOC_INIT_ID = IniDocInitId
       $sessionStorage.DOC_ID = docId;
 
-      if(config_app.docDetails.ERROR !== "NULL") {
+      console.log(config_app.INITIATED_DETAILS_CUR);
+
+      if(config_app.docDetails.ERROR !== "NULL" && config_app.docDetails.ERROR != undefined) {
         PelApi.showPopup(config_app.interfaceErrorTitle, config_app.docDetails.ERROR);
         return;
       }
 
+      console.log("===============================================================");
+      console.log("===                   P4                                    ===");
+      console.log("===============================================================");
       console.log(config_app.docDetails);
-      //----------- Order Header -------------
+
       $scope.APP_ID = appId;
       $scope.NOTIFICATION_ID = config_app.docDetails.NOTIFICATION_ID;
-      $scope.PO_ORDER = config_app.docDetails.PO_ORDER;
-      $scope.PO_ORDER_NUMBER = config_app.docDetails.PO_ORDER_NUMBER;
-      $scope.COMMENTS = config_app.docDetails.COMMENTS;
-      $scope.PO_AMOUNT = config_app.docDetails.PO_AMOUNT;
-      $scope.CURRENCY = config_app.docDetails.CURRENCY;
-      $scope.VENDOR_NAME = config_app.docDetails.VENDOR_NAME;
-      $scope.SUBMIT_DATE = config_app.docDetails.SUBMIT_DATE;
-      $scope.BUYER_NAME = config_app.docDetails.BUYER_NAME;
-      $scope.MANAGER_NAME = config_app.docDetails.MANAGER_NAME;
-      $scope.PO_EXPLAIN = config_app.docDetails.PO_EXPLAIN;
-      $scope.SUPPLIER_REASON = config_app.docDetails.SUPPLIER_REASON;
 
-      //----------- Match Price --------
-      $scope.MATCH_PRICE = $scope.getMatchPrice(config_app.docDetails.MATCH_PRICE);
-      console.log("================== MATCH PRICE ====================");
-      console.log($scope.MATCH_PRICE);
+      $scope.INI_ACTION_HISTORY = $scope.addPushFlagToActionHistory(config_app.docDetails.INITIATED_APPROVAL_LIST_CUR);
+      $scope.INI_ATTACHED_DOCUMENTS = $scope.getAttachedDocuments(config_app.docDetails.INITIATED_ATTACHMENTS_CUR);
 
-      //----------- Attachments --------
-      $scope.ATTACHED_DOCUMENTS = $scope.getAttachedDocuments(config_app.docDetails.ATTACHED_DOCUMENTS);
-      console.log("================== ATTACHED_DOCUMENTS ====================");
-      console.log(JSON.stringify($scope.ATTACHED_DOCUMENTS));
-
+      //----------- Attachment Show ---------
+      $scope.INI_ATTACHED_DOCUMENTS_SHOW = true;
       //----------- Buttons ------------
+      if(mode === "VIEW"){
+        $scope.INI_BUTTONS_SHOW = false
+      }else{
+        $scope.INI_BUTTONS_SHOW = true;
+      }
+
       $scope.buttonsArr      = config_app.docDetails.BUTTONS;
 
-      //----------- Action History -----
-      var actionHistory = $scope.addPushFlagToActionHistory(config_app.docDetails.ACTION_HISTORY);
-      $scope.ACTION_HISTORY = actionHistory;
-      console.log("length : " + $scope.ACTION_HISTORY.length);
-
-      console.log("====================================================");
-      console.log(JSON.stringify($scope.ACTION_HISTORY));
-      console.log("====================================================");
 
       // Show the action sheet
       $scope.approve = config_app.ApprovRejectBtnDisplay;

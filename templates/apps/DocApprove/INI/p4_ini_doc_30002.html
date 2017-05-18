@@ -13,9 +13,8 @@
   </ion-nav-title>
 
   <ion-content scroll="false" onload="doRefresh()">
-    <div class="pele-page-title pele-img-size pele-page-title-font">
-      <!-- <a class="description">אישור הזמנות רכש</a> -->
-      <a class="description"> {{PO_ORDER_NUMBER}} הזמנות רכש</a>
+    <div class="pele-page-title pele-img-size pele-page-title-font pele_rtl">
+      <a class="description ">מסמך יזום {{INI_DOC_INIT_ID}}</a>
     </div>
     <tab-slide-box>
       <div class="tsb-icons">
@@ -34,7 +33,7 @@
         <!-------------------------------------------------------------------------------->
         <ion-slide>
           <ion-scroll style="height:80%" delegate-handle="slide1Scroll" >
-            <div ng-repeat="detail in ACTION_HISTORY" type="item-text-wrap" dir="RTL">
+            <div ng-repeat="detail in INI_ACTION_HISTORY" type="item-text-wrap" dir="RTL">
               <!--<div class="item item-divider "> -->
               <a class="item item-divider item-icon-right pele-item-icon-left" ng-hide="pelHideShow2( detail.DISPLAY_FLAG )"  ng-click="detail.SHOW_FLAG = !detail.SHOW_FLAG; detail.PUSH_COUNT = PUSH_COUNT +1; " >
                 <!-- <i class="icon icon-left {{getApproveListActionIcon(detail.ACTION_CODE)}}"></i> -->
@@ -71,109 +70,64 @@
         <!------------------------------------------------------------------------------->
         <ion-slide>
           <ion-scroll style="height:80%" delegate-handle="slide1Scroll">
-            <!-- Refresh to get the new posts -->
-            <label class="item">
-              <div class="row">
-                <div class="col text-right pele_rtl"><h2><b>{{PO_ORDER}}</b></h2></div>
-              </div>
-            </label>
-
             <ul class="list">
-              <!---------------------------- 10002 --------------------------------->
-              <div type="item-text-wrap" ng-click="PO_COMMENTS_SHOW = !PO_COMMENTS_SHOW">
+              <div type="item-text-wrap" ng-click="INI_DETAILS_SHOW = !INI_DETAILS_SHOW">
                 <a class="item item-divider item-icon-right">
+                  <h2 class="text-right pele_rtl">פרטי יזום</h2>
                   <i class="icon ion-clipboard"></i>
-                  <h2 class="text-right pele_rtl">תיאור הזמנה</h2>
                 </a>
               </div>
-              <div class="item item-text-wrap text-right pele_rtl" ng-show="PO_COMMENTS_SHOW">
-                {{COMMENTS}}
+              <div class="row" ng-show="">
+                <div class="col text-right pele_rtl"><br></br></div>
               </div>
-              <!------------------------------------------------>
-              <div type="item-text-wrap" ng-click="PO_DETAILS_SHOW = !PO_DETAILS_SHOW">
-                <a class="item item-divider item-icon-right">
-                  <i class="icon ion-clipboard"></i>
-                  <h2 class="text-right pele_rtl">פרטי הזמנה</h2>
-                </a>
+              <div class="pele-row" ng-show="INI_DETAILS_SHOW">
+                <div class="col text-right pele_rtl"><b>{{INITIATED_DETAILS_CUR.INI_DESCRIPTION_1}}</b></div>
               </div>
-              <div class="row" ng-show="PO_DETAILS_SHOW">
-                <div class="col text-right pele_rtl"><b></b></div>
+              <div class="pele-row" ng-show="INI_DETAILS_SHOW">
+                <div class="col text-right pele_rtl"><br></br></div>
               </div>
-              <div class="pele-row" ng-show="PO_DETAILS_SHOW">
-                <div class="col col-75 text-right pele_rtl">{{PO_AMOUNT}} {{CURRENCY}}</div>
-                <div class="col col-25 text-right pele_rtl"><p class="under">סה"כ</p></div>
+              <div class="pele-row" ng-show="INI_DETAILS_SHOW">
+                <div class="col col-75 text-right pele_rtl">{{INITIATED_DETAILS_CUR.INI_NAME_2}}</div>
+                <div class="col col-25 text-right pele_rtl"><p class="under">שם מסמך</p></div>
               </div>
-              <div class="pele-row" ng-show="PO_DETAILS_SHOW">
-                <div class="col col-75 text-right pele_rtl">{{VENDOR_NAME}}</div>
-                <div class="col col-25 text-right pele_rtl"><p class="under">ספק</p></div>
+              <div class="pele-row" ng-show="INI_DETAILS_SHOW">
+                <div class="col col-75 text-right pele_rtl">{{INITIATED_DETAILS_CUR.INI_CREATION_DATE_3}}</div>
+                <div class="col col-25 text-right pele_rtl"><p class="under">תאריך יצירה</p></div>
               </div>
-              <div class="pele-row" ng-show="PO_DETAILS_SHOW">
-                <div class="col col-75 text-right pele_rtl">{{SUBMIT_DATE}}</div>
-                <div class="col col-35 text-right pele_rtl"><p class="under">תאריך יצירה</p></div>
+              <div class="pele-row" ng-show="INI_DETAILS_SHOW">
+                <div class="col col-75 text-right pele_rtl">{{INITIATED_DETAILS_CUR.INI_PREPARER_NAME_4}}</div>
+                <div class="col col-25 text-right pele_rtl"><p class="under">יוזם</p></div>
               </div>
-              <div class="pele-row" ng-show="PO_DETAILS_SHOW">
-                <div class="col col-75 text-right pele_rtl">{{BUYER_NAME}}</div>
-                <div class="col col-35 text-right pele_rtl"><p class="under">קנין</p></div>
+              <div class="pele-row" ng-show="INI_DETAILS_SHOW">
+                <div class="col col-75 text-right pele_rtl">{{INITIATED_DETAILS_CUR.INI_NOTE_TO_APPROVER_5}}</div>
+                <div class="col col-25 text-right pele_rtl"><p class="under">הצדקת יזום</p></div>
               </div>
-              <div class="pele-row" ng-show="PO_DETAILS_SHOW">
-                <div class="col col-75 text-right pele_rtl">{{MANAGER_NAME}}</div>
-                <div class="col col-35 text-right pele_rtl"><p class="under">סמנכ"ל דורש</p></div>
+              <div class="pele-row" ng-show="INI_DETAILS_SHOW">
+                <div class="col col-75 text-right pele_rtl">{{INITIATED_DETAILS_CUR.INI_VENDOR_NAME_6}}</div>
+                <div class="col col-25 text-right pele_rtl"><p class="under">ספק מומלץ</p></div>
+              </div>
+              <div class="pele-row" ng-show="INI_DETAILS_SHOW">
+                <div class="col col-75 text-right pele_rtl">{{INITIATED_DETAILS_CUR.INI_CONTRACT_REQUIRED_7}}</div>
+                <div class="col col-25 text-right pele_rtl"><p class="under">חוזה תחזוקה</p></div>
+              </div>
+              <div class="pele-row" ng-show="INI_DETAILS_SHOW">
+                <div class="col col-75 text-right pele_rtl">{{INITIATED_DETAILS_CUR.INI_QUOTATION_EXISTS_8}}</div>
+                <div class="col col-25 text-right pele_rtl"><p class="under">הצעת מחיר</p></div>
+              </div>
+              <div class="pele-row" ng-show="INI_DETAILS_SHOW">
+                <div class="col col-75 text-right pele_rtl"><table><tr><td>{{INITIATED_DETAILS_CUR.INI_ESTIMATED_AMOUNT_9}}</td><td>&nbsp;</td><td>{{INITIATED_DETAILS_CUR.INI_CURRENCY_CODE_10}}</td></tr></table></div>
+                <div class="col col-25 text-right pele_rtl"><p class="under">סכום משוער</b></div>
               </div>
 
-              <!------------------------------------------------>
-              <div type="item-text-wrap" ng-click="PO_EXPLAIN_SHOW = !PO_EXPLAIN_SHOW">
-                <a class="item item-divider item-icon-right">
-                  <i class="icon ion-clipboard"></i>
-                  <h2 class="text-right pele_rtl">הסבר כללי</h2>
-                </a>
-              </div>
-              <div class="item item-text-wrap text-right pele_rtl" ng-show="PO_EXPLAIN_SHOW">
-                {{PO_EXPLAIN}}
-              </div>
-              <div type="item-text-wrap" ng-click="PO_SUPPLIER_REASON_SHOW = !PO_SUPPLIER_REASON_SHOW">
-                <a class="item item-divider item-icon-right">
-                  <i class="icon ion-clipboard"></i>
-                  <h2 class="text-right pele_rtl">נימוק לבחירת ספק</h2>
-                </a>
-              </div>
-              <!-- <div class="item item-text-wrap text-right" ng-show="PO_SUPPLIER_REASON_SHOW"> -->
-              <!-- <div class="item item-text-wrap" direction="RTL" ng-show="PO_SUPPLIER_REASON_SHOW"> -->
-              <div class="item item-text-wrap text-right pele_rtl" ng-show="PO_SUPPLIER_REASON_SHOW">
 
-                {{SUPPLIER_REASON}}
-              </div>
-
-              <!-- Match Price -->
-              <div type="item-text-wrap" ng-click="PO_MATCH_PRICE_SHOW=!PO_MATCH_PRICE_SHOW" >
-                <a class="item item-divider item-icon-right">
-                  <i class="icon ion-calculator"></i>
-                  <h2 class="text-right pele_rtl">השוואת מחירים</h2>
-                </a>
-              </div>
-              <div ng-repeat="matchPricerow in MATCH_PRICE" ng-show="PO_MATCH_PRICE_SHOW">
-
-                <div class="card">
-                  <div class="item item-divider text-right pele_rtl">
-                    שם ספק :{{matchPricerow.VENDOR_NAME}}
-                  </div>
-                  <div class="row ">
-                    <div class="item item-text-wrap text-right pele_rtl">
-                      מחיר סופי: {{matchPricerow.TOTAL_PRICE}}
-                    </div>
-                    <div class="item item-text-wrap text-right pele_rtl">
-                      מחיר ראשוני: {{matchPricerow.UNIT_PRICE}}
-                    </div>
-                  </div>
-                </div>
-              </div>
               <!------------- Attached Documents --------------->
-              <div type="item-text-wrap" ng-click="PO_ATTACHED_DOCUMENTS_SHOW = !PO_ATTACHED_DOCUMENTS_SHOW">
+              <div type="item-text-wrap" ng-click="INI_ATTACHED_DOCUMENTS_SHOW = !INI_ATTACHED_DOCUMENTS_SHOW">
                 <a class="item item-divider item-icon-right">
+                  <h2 class="text-right pele_rtl">נספחי יזום</h2>
                   <i class="icon ion-paperclip"></i>
-                  <h2 class="text-right pele_rtl">נספחי הזמנה</h2>
                 </a>
               </div>
-              <div class="item item-text-wrap text-right pele_rtl" ng-repeat="document in ATTACHED_DOCUMENTS" ng-show="PO_ATTACHED_DOCUMENTS_SHOW">
+              <div class="item item-text-wrap text-right pele_rtl" ng-repeat="document in INI_ATTACHED_DOCUMENTS" ng-show="INI_ATTACHED_DOCUMENTS_SHOW">
                 <!-- <p class="under" style="color:blue" ng-click="openAttachedFile(document.OPEN_FILE_NAME,  document.FULL_FILE_NAME , document.FILE_TYPE ,document.FILE_MAOF_TYPE , document.SHORT_TEXT , document.LONG_TEXT , document.IS_FILE_OPENED_ON_MOBILE , document.IOS_OPEN_FILE_NAME )">{{document.FILE_NAME}}</p>-->
                 <p class="under" ng-style="getAttachmentLinkStyle(document.IS_FILE_OPENED_ON_MOBILE)" ng-click="openAttachedFile(document.OPEN_FILE_NAME,  document.FULL_FILE_NAME , document.FILE_TYPE ,document.FILE_MAOF_TYPE , document.SHORT_TEXT , document.LONG_TEXT , document.IS_FILE_OPENED_ON_MOBILE , document.IOS_OPEN_FILE_NAME )">{{document.FILE_NAME}}</p>
               </div>
@@ -186,7 +140,7 @@
 
   <!-- Footer Actions -->
 
-  <ion-footer-bar align-title="right">
+  <ion-footer-bar align-title="right" ng-show="false">
 
     <div class="row">
       <div class="col">

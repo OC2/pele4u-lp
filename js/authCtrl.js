@@ -9,6 +9,7 @@ app.controller('LoginCtrl', function( $scope
                                     , $q
                                     , $rootScope
                                     , PelApi
+                                    , $localStorage
                                     , $ionicLoading) {
   //------------------------------------------------------------//
   //--                    Get AppId                           --//

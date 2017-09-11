@@ -144,12 +144,13 @@ angular.module('pele.factories', ['ngStorage','LocalStorageModule'])
       this.writeToLog(config_app.LOG_FILE_INFO_TYPE , "URL :" + JSON.stringify(envUrl));
       this.writeToLog(config_app.LOG_FILE_INFO_TYPE , "VERSION :" + version);
 
-      return   $http({
+      return $http({
         url:envUrl,
         method: "GET",
         timeout :appSettings.menuTimeout,
         headers:headers
       });
+
     },
     //------------------------------------------------------------------------//
     //                        getUserModuleTypes PAGE 2                       //

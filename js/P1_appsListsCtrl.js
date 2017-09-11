@@ -247,8 +247,18 @@ app.controller('P1_appsListCtrl'
           PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE , " Interface getUserMenu return SUCCESS");
           PelApi.writeToLog(config_app.LOG_FILE_INFO_TYPE , JSON.stringify(data));
 
-          console.log("headers('msisdn_res') : " + headers('msisdn_res'));
-          config_app.MSISDN_VALUE = headers('msisdn_res');
+          console.log("headers('msisdn_res') : " + headers('msisdn_res') + data.msisdn + data.user);
+          //config_app.MSISDN_VALUE =  headers('msisdn_res'); YanisSha change getting global storage number of user 20.05.2017
+
+          if (headers('msisdn_res') !==  undefined && headers('msisdn_res') !== null && headers('msisdn_res') != null){
+            config_app.MSISDN_VALUE =  headers('msisdn_res');
+          }
+          else{
+            if (data.msisdn !== undefined && data.msisdn !== null && data.msisdn != null){
+              config_app.MSISDN_VALUE = data.msisdn;
+            }
+          }
+
           $scope.setMSISDN(config_app.MSISDN_VALUE);
 
           var pinCodeStatus = PelApi.GetPinCodeStatus(data, "getMenu");

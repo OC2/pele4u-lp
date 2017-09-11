@@ -4,8 +4,13 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.int-pele.pele4ulp"
+<<<<<<< HEAD
         version   = "116.9"
         versionCode= "116.9" >
+=======
+        version   = "116.7"
+        versionCode= "116.7" >
+>>>>>>> origin/master
 
 <name>LP_PELE4U</name>
 
@@ -162,7 +167,11 @@
 <splash platform="android" qualifier="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png" />
 
 <gap:config-file platform="ios" parent="CFBundleShortVersionString">
+<<<<<<< HEAD
 	<string>116.9</string>
+=======
+	<string>116.7</string>
+>>>>>>> origin/master
 </gap:config-file>
 
     <!--

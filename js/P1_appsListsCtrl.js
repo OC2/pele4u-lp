@@ -250,7 +250,6 @@ app.controller('P1_appsListCtrl'
           console.log("headers('msisdn_res') : " + headers('msisdn_res') + data.msisdn + data.user);
           //config_app.MSISDN_VALUE =  headers('msisdn_res'); YanisSha change getting global storage number of user 20.05.2017
 
-<<<<<<< HEAD
           if (headers('msisdn_res') !==  undefined && headers('msisdn_res') !== null && headers('msisdn_res') != null){
             config_app.MSISDN_VALUE =  headers('msisdn_res');
           }
@@ -258,14 +257,6 @@ app.controller('P1_appsListCtrl'
             if (data.msisdn !== undefined && data.msisdn !== null && data.msisdn != null){
               config_app.MSISDN_VALUE = data.msisdn;
             }
-=======
-          if (headers('msisdn_res') ===  undefined || headers('msisdn_res') === null){
-            var tempMSISDN = data.msisdn;
-            config_app.MSISDN_VALUE = tempMSISDN.replace(/^.{3}/g, '0');
-          }
-          else{
-            config_app.MSISDN_VALUE =  headers('msisdn_res');
->>>>>>> origin/master
           }
 
           $scope.setMSISDN(config_app.MSISDN_VALUE);

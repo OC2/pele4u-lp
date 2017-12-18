@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.int-pele.pele4ulp" version="117.2" versionCode="117.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>
-      PELE4U</name>
+<widget id="com.int-pele.pele4ulp" version="117.9" versionCode="117.9" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name> PELE4U LP</name>
     <description>
     Work form anywhere
   </description>
@@ -9,13 +8,15 @@
     Pelephone IT
   </author>
 
+  <platform name="ios" />
+  <platform name="android" />
+
+
   <preference name="phonegap-version" value="cli-7.0.1" /><!-- for Push Notif O.H / R.W. 08/02/2016 -->
   <preference name="android-build-tool" value="gradle" /> <!-- for Push Notif O.H / R.W.  08/02/2016 -->
   <preference name="android-minSdkVersion" value="15" />
       <!--   <preference name="android-maxSdkVersion" value="15" /> -->
   <preference name="android-targetSdkVersion" value="23" />
-
-
     <preference name="permissions" value="none" />
     <preference name="orientation" value="portrait" />
     <preference name="target-device" value="handset" />
@@ -61,7 +62,7 @@
         <param name="URL_SCHEME" value="pele4u" />
     </plugin>
     <plugin name="cordova-plugin-whitelist" />
-    <plugin name="phonegap-plugin-barcodescanner" source="npm">
+    <plugin name="phonegap-plugin-barcodescanner" spec="^6.0.8">
         <variable name="CAMERA_USAGE_DESCRIPTION" value="Allow the app to use your camera" />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Allow the app to access your photos" />
     </plugin>
@@ -102,7 +103,7 @@
     <splash platform="android" qualifier="xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png" />
     <splash platform="android" qualifier="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png" />
     <gap:config-file parent="CFBundleShortVersionString" platform="ios">
-        <string>117.2</string>
+        <string>117.9</string>
     </gap:config-file>
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -112,7 +113,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
 
-    <plugin name="cordova-plugin-badge" spec="~0.8.1" />
-    <plugin name="cordova-plugin-x-socialsharing" spec="https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git" />
-    <plugin name="onesignal-cordova-plugin" spec="^2.1.1" source="npm" />
+    <plugin name="cordova-plugin-badge" spec="~0.8.5" />
+    <plugin name="cordova-plugin-x-socialsharing" source="npm" />
+    <plugin name="onesignal-cordova-plugin" spec="^2.2.2" source="npm" />
 </widget>

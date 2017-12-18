@@ -103,6 +103,7 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
       //---------------------------------------------------------------------------//
       .state('app.p1_appsLists', {
         url: '/p1_appsLists',
+        cache: false,
         views: {
           'menuContent': {
             templateUrl: 'templates/p1_appsLists.html',
@@ -279,7 +280,9 @@ angular.module('pele', ['ionic', 'ngCordova', 'ngStorage', 'tabSlideBox', 'pele.
       responseError: function(rejection) {
         // Retry
         var PelApi = $injector.get('PelApi');
+
         rejection.config.responseTimestamp = new Date().getTime();
+
         if (retries < (rejection.config.retry || 0)) {
           PelApi.lagger.error("Reject & Retry . number :  " + retries, "on Config : ", rejection.config)
           retries++;

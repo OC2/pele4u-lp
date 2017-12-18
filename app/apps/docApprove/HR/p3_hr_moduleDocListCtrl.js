@@ -40,7 +40,7 @@ angular.module('pele')
 
           if (data.Response.OutParams.ROW[0].DOC_NAME === null) {
             //$state.go("app.p1_appsLists");
-            appSettings.config.IS_TOKEN_VALID = "N";
+            //appSettings.config.IS_TOKEN_VALID = "N";
             PelApi.goHome();
           } else {
             $scope.docsGroups = data.Response.OutParams.ROW;
@@ -72,10 +72,10 @@ angular.module('pele')
         } else if ("ERROR_CODE" === pinStatus) {
           PelApi.throwError("app", "GetUserFormGroups", JSON.stringify(data));
         }
-      }).error(function(error, httpStatus,headers,config) {
+      }).error(function(error, httpStatus, headers, config) {
         var time = config.responseTimestamp - config.requestTimestamp;
-        var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-        PelApi.throwError("api", "GetUserFormGroups", "httpStatus : " + httpStatus +  tr)
+        var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+        PelApi.throwError("api", "GetUserFormGroups", "httpStatus : " + httpStatus + tr)
       }).finally(function() {
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');
@@ -226,10 +226,10 @@ angular.module('pele')
           PelApi.showPopupVersionUpdate(data.StatusDesc, "");
 
         }
-      }).error(function(error,httpStatus,headers,config) {
+      }).error(function(error, httpStatus, headers, config) {
         var time = config.responseTimestamp - config.requestTimestamp;
-        var tr = ' (TS  : '+ (time / 1000) + ' seconds)';
-        PelApi.throwError("api", "GetUserNotifNew", JSON.stringify(error) +  tr);
+        var tr = ' (TS  : ' + (time / 1000) + ' seconds)';
+        PelApi.throwError("api", "GetUserNotifNew", JSON.stringify(error) + tr);
       }).finally(function() {
         $ionicLoading.hide();
         $scope.$broadcast('scroll.refreshComplete');
